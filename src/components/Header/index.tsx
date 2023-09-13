@@ -1,4 +1,4 @@
-import { ChainId } from '@uniswap/sdk'
+import { ChainId } from 'rswap-sdk'
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
@@ -7,19 +7,15 @@ import styled from 'styled-components'
 
 import Logo from '../../assets/svg/logo.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
-import Wordmark from '../../assets/svg/wordmark.svg'
-import WordmarkDark from '../../assets/svg/wordmark_white.svg'
 import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
 import { useETHBalances } from '../../state/wallet/hooks'
 
 import { YellowCard } from '../Card'
 import Settings from '../Settings'
-import Menu from '../Menu'
-
-import Row, { RowBetween } from '../Row'
+import { Moon, Sun } from 'react-feather';
+import { RowBetween } from '../Row'
 import Web3Status from '../Web3Status'
-import VersionSwitch from './VersionSwitch'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -51,6 +47,40 @@ const HeaderElementWrap = styled.div`
 `};
 `
 
+
+export const StyledMenuButton = styled.button`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  height: 35px;
+  background-color: ${({ theme }) => theme.bg3};
+  margin-left: 8px;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px, rgba(0, 0, 0, 0.04) 0px 16px 24px,
+    rgba(0, 0, 0, 0.01) 0px 24px 32px;
+
+  :hover,
+  :focus {
+    cursor: pointer;
+    outline: none;
+    background-color: ${({ theme }) => theme.bg4};
+  }
+
+  svg {
+    margin-top: 2px;
+  }
+  > * {
+    stroke: ${({ theme }) => theme.text1};
+  }
+`;
+
+
+
 const Title = styled.a`
   display: flex;
   align-items: center;
@@ -61,13 +91,7 @@ const Title = styled.a`
   }
 `
 
-const TitleText = styled(Row)`
-  width: fit-content;
-  white-space: nowrap;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
-`
+
 
 const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
@@ -131,14 +155,14 @@ const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.RINKEBY]: 'Rinkeby',
   [ChainId.ROPSTEN]: 'Ropsten',
   [ChainId.GÖRLI]: 'Görli',
-  [ChainId.KOVAN]: 'Kovan'
+  [ChainId.KOVAN]: 'Kovan',
+  [ChainId.RTH]: 'RTH'
 }
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-
+  const [darkMode, toggleDarkMode] = useDarkModeManager();
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
-  const [isDark] = useDarkModeManager()
 
   return (
     <HeaderFrame>
@@ -146,11 +170,8 @@ export default function Header() {
         <HeaderElement>
           <Title href=".">
             <UniIcon>
-              <img src={isDark ? LogoDark : Logo} alt="logo" />
+              <img width={'22px'} src={darkMode ? LogoDark : Logo} alt="logo" />
             </UniIcon>
-            <TitleText>
-              <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />
-            </TitleText>
           </Title>
         </HeaderElement>
         <HeaderControls>
@@ -161,16 +182,17 @@ export default function Header() {
             <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
               {account && userEthBalance ? (
                 <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                  {userEthBalance?.toSignificant(4)} ETH
+                  {userEthBalance?.toSignificant(4)} RTH
                 </BalanceText>
               ) : null}
               <Web3Status />
             </AccountElement>
           </HeaderElement>
           <HeaderElementWrap>
-            <VersionSwitch />
             <Settings />
-            <Menu />
+            <StyledMenuButton onClick={toggleDarkMode}>
+            {darkMode ? <Moon size={20} /> : <Sun size={20} />}
+            </StyledMenuButton>
           </HeaderElementWrap>
         </HeaderControls>
       </RowBetween>

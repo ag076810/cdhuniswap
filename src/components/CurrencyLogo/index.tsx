@@ -1,4 +1,4 @@
-import { Currency, ETHER, Token } from '@uniswap/sdk'
+import { Currency, ETHER, Token } from 'rswap-sdk'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -8,8 +8,7 @@ import { WrappedTokenInfo } from '../../state/lists/hooks'
 import Logo from '../Logo'
 
 const getTokenLogoURL = (address: string) =>
-  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
-
+  "https://raw.githubusercontent.com/ag076810/Rswap-tokenlist/main/assets/tokenlist/${address}/logo.png"
 const StyledEthereumLogo = styled.img<{ size: string }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};

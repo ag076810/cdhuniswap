@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Wrapped RTH",
+    "address": "0x0000000000E3448F3b4f0a59cDd084689a8eA3cB",
+    "symbol": "WRTH",
+    "decimals": 18,
+    "chainId": 622277,
+    "logoURI": "https://github.com/ag076810/rthswap/blob/b16db10a322374bc93de158204ee5a5ab91a54bb/logo.png?raw=true"
+  }
+]

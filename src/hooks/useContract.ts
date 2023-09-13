@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { ChainId, WETH } from '@uniswap/sdk'
+import { ChainId, WETH } from 'rswap-sdk'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { useMemo } from 'react'
 import ENS_ABI from '../constants/abis/ens-registrar.json'
@@ -59,6 +59,7 @@ export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contrac
       case ChainId.MAINNET:
       case ChainId.GÖRLI:
       case ChainId.ROPSTEN:
+      case ChainId.RTH:
       case ChainId.RINKEBY:
         address = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
         break
